@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+  </head>
+  <body>
+    {% include navigation.html %}
+    <main class="app" id="app">
+      <header class="app__header">
+        <h1 class="app__title">Vischeck Simulator</h1>
+        <p class="app__subtitle">Client-side Vischeck simulation (Brettel/Vienot/Mollon) with optional Daltonize correction.</p>
+      </header>
+
+      <section class="app__layout">
+        <aside class="panel" aria-label="Controls">
+          <div class="panel__section">
+            <h2 class="panel__title">Image</h2>
+
+            <label class="field">
+              <span class="field__label">Upload</span>
+              <input type="file" id="fileInput" accept="image/*" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Sample</span>
+              <select id="sampleSelect">
+                <option value="">(none)</option>
+                <option value="assets/img/apples/orig.jpg">Apples</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Max size</span>
+              <select id="maxSize">
+                <option value="512">512px</option>
+                <option value="1024" selected>1024px</option>
+                <option value="2048">2048px</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Simulation</h2>
+            <label class="field">
+              <span class="field__label">Type</span>
+              <select id="simType">
+                <option value="normal">Normal</option>
+                <option value="protanope">Protanope</option>
+                <option value="deuteranope" selected>Deuteranope</option>
+                <option value="tritanope">Tritanope</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Daltonize</h2>
+            <label class="toggle">
+              <input type="checkbox" id="daltonizeEnabled" />
+              <span>Enable correction</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">LM stretch</span>
+              <input type="range" id="lmStretch" min="0" max="100" value="50" />
+              <span class="field__value" id="lmStretchVal">50</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Lum scale</span>
+              <input type="range" id="lumScale" min="0" max="100" value="50" />
+              <span class="field__value" id="lumScaleVal">50</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">S scale</span>
+              <input type="range" id="sScale" min="0" max="100" value="50" />
+              <span class="field__value" id="sScaleVal">50</span>
+            </label>
+          </div>
+
+          <div class="panel__section panel__section--actions">
+            <button class="btn" id="runBtn" type="button">Run</button>
+            <button class="btn btn--secondary" id="resetBtn" type="button">Reset</button>
+            <label class="field">
+              <span class="field__label">Download</span>
+              <select id="downloadWhich">
+                <option value="original">Original</option>
+                <option value="sim">Simulated</option>
+                <option value="dalt">Daltonized</option>
+                <option value="daltSim" selected>Daltonized + Simulated</option>
+              </select>
+            </label>
+            <button class="btn" id="downloadBtn" type="button">Download PNG</button>
+            <p class="status" id="status"></p>
+          </div>
+        </aside>
+
+        <section class="viewer" aria-label="Previews">
+          <div class="grid">
+            <figure class="tile">
+              <figcaption class="tile__title">Original</figcaption>
+              <canvas id="canvasOriginal"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">Simulated</figcaption>
+              <canvas id="canvasSim"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">Daltonized</figcaption>
+              <canvas id="canvasDalt"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">Daltonized + Simulated</figcaption>
+              <canvas id="canvasDaltSim"></canvas>
+            </figure>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>
+

@@ -1,14 +1,28 @@
-import numpy as np
 import math
-from scipy.ndimage import gaussian_filter 
 import numbers
+from typing import Any, Optional
+
+import numpy as np
 from PIL import Image
-from torchvision import transforms
-import torch
-from torch import Tensor
+from scipy.ndimage import gaussian_filter
+
+try:
+    import torch  # type: ignore
+    from torch import Tensor  # type: ignore
+except Exception:  # pragma: no cover
+    torch = None  # type: ignore
+    Tensor = Any  # type: ignore
+
+try:
+    from torchvision import transforms  # type: ignore
+except Exception:  # pragma: no cover
+    transforms = None  # type: ignore
 
 
-class TinyEyes(torch.nn.Module):
+_BaseModule = torch.nn.Module if torch is not None else object  # type: ignore[attr-defined]
+
+
+class TinyEyes(_BaseModule):
     """Apply TinyEyes Transformation to a given PIL Image or torch Tensor.
     
     Args:
@@ -21,18 +35,18 @@ class TinyEyes(torch.nn.Module):
     _convert_rgb2lms_np=np.array([[0.05059983, 0.08585369, 0.00952420],
                                [0.01893033, 0.08925308, 0.01370054],
                                [0.00292202, 0.00975732, 0.07145979]])  
-    _convert_rgb2lms_t = torch.from_numpy(_convert_rgb2lms_np).float()
+    _convert_rgb2lms_t: Optional["Tensor"] = None
 
     _convert_lms2opp_np=np.array([[  0.5000,     0.5,       0],
                                [ -0.6690,  0.7420, -0.0270],
                                [ -0.2120, -0.3540,  0.9110]])
-    _convert_lms2opp_t = torch.from_numpy(_convert_lms2opp_np).float()
+    _convert_lms2opp_t: Optional["Tensor"] = None
 
     _convert_lms2rgb_np=np.linalg.pinv(_convert_rgb2lms_np)
-    _convert_lms2rgb_t = torch.from_numpy(_convert_lms2rgb_np).float()
+    _convert_lms2rgb_t: Optional["Tensor"] = None
 
     _convert_opp2lms_np=np.linalg.inv(_convert_lms2opp_np)
-    _convert_opp2lms_t = torch.from_numpy(_convert_opp2lms_np).float()
+    _convert_opp2lms_t: Optional["Tensor"] = None
 
     # Get model of BLUR
     # Values estimated by Prof Alex Wade and colleagues from developmental literature
@@ -52,7 +66,8 @@ class TinyEyes(torch.nn.Module):
                  imp: str = 'cpu'):
         
         
-        super().__init__() 
+        if torch is not None:
+            super().__init__()  # type: ignore[misc]
             
         if age not in TinyEyes._possible_ages:
             raise ValueError(f"Age must be one of {TinyEyes._possible_ages}")
@@ -69,6 +84,9 @@ class TinyEyes(torch.nn.Module):
         if imp not in ['cpu', 'gpu']:
             raise ValueError("imp must be 'cpu' or 'gpu'")
         self.imp = imp
+
+        if self.imp == 'gpu' and torch is None:
+            raise ImportError("GPU mode requires 'torch' to be installed")
         
         self.modelForAge = TinyEyes._modelByAge[age]
 
@@ -84,7 +102,7 @@ class TinyEyes(torch.nn.Module):
 
         if isinstance(img, Image.Image):
             img_w, img_h = img.size
-        elif isinstance(img, Tensor):
+        elif torch is not None and isinstance(img, torch.Tensor):  # type: ignore[attr-defined]
             img_c, img_w, img_h = img.size() if img.ndim == 3 else img.shape[1:]
         else:
             raise TypeError("img must be PIL.Image or torch.Tensor")
@@ -111,7 +129,7 @@ class TinyEyes(torch.nn.Module):
             return self.blur_np_image(img, channelwise_blur)
 
         # Torch Tensor
-        if isinstance(img, Tensor):
+        if torch is not None and isinstance(img, torch.Tensor):  # type: ignore[attr-defined]
             # Ensure batch dimension
             if img.dim() == 3:
                 img = img.unsqueeze(0)  # (C, H, W) -> (1, C, H, W)
@@ -142,16 +160,30 @@ class TinyEyes(torch.nn.Module):
         img_out_rgb_reshaped = img_out_rgb.reshape(3, x, y).transpose(1,2,0).astype('uint8')
         return Image.fromarray(img_out_rgb_reshaped, 'RGB')
 
-    def _rgb_to_opp_t(self, img_flat: Tensor, device: str) -> Tensor:
-        img_lms = torch.matmul(self._convert_rgb2lms_t.to(device), (img_flat - 0.5) / 0.5)
-        return torch.matmul(self._convert_lms2opp_t.to(device), img_lms)
+    def _ensure_torch(self) -> None:
+        if torch is None:
+            raise ImportError("Torch is required for tensor-based TinyEyes transforms")
+        if transforms is None:
+            raise ImportError("Torchvision is required for tensor-based TinyEyes transforms")
+        if self._convert_rgb2lms_t is None:
+            self._convert_rgb2lms_t = torch.from_numpy(self._convert_rgb2lms_np).float()  # type: ignore[union-attr]
+            self._convert_lms2opp_t = torch.from_numpy(self._convert_lms2opp_np).float()  # type: ignore[union-attr]
+            self._convert_lms2rgb_t = torch.from_numpy(self._convert_lms2rgb_np).float()  # type: ignore[union-attr]
+            self._convert_opp2lms_t = torch.from_numpy(self._convert_opp2lms_np).float()  # type: ignore[union-attr]
 
-    def _opp_to_rgb_t(self, img_blur: Tensor, device: str) -> Tensor:
-        img_lms = torch.matmul(self._convert_opp2lms_t.to(device), img_blur)
-        img_out = torch.matmul(self._convert_lms2rgb_t.to(device), img_lms) * 0.5 + 0.5
+    def _rgb_to_opp_t(self, img_flat: "Tensor", device: str) -> "Tensor":
+        self._ensure_torch()
+        img_lms = torch.matmul(self._convert_rgb2lms_t.to(device), (img_flat - 0.5) / 0.5)  # type: ignore[union-attr]
+        return torch.matmul(self._convert_lms2opp_t.to(device), img_lms)  # type: ignore[union-attr]
+
+    def _opp_to_rgb_t(self, img_blur: "Tensor", device: str) -> "Tensor":
+        self._ensure_torch()
+        img_lms = torch.matmul(self._convert_opp2lms_t.to(device), img_blur)  # type: ignore[union-attr]
+        img_out = torch.matmul(self._convert_lms2rgb_t.to(device), img_lms) * 0.5 + 0.5  # type: ignore[union-attr]
         return torch.clip(img_out, 0, 1)
 
-    def blur_torch_image(self, img: Tensor, channelwise_blur: np.ndarray) -> Tensor:
+    def blur_torch_image(self, img: "Tensor", channelwise_blur: np.ndarray) -> "Tensor":
+        self._ensure_torch()
         device = 'cuda' if self.imp == 'gpu' else 'cpu'
         n, c, x, y = img.shape
         img_flat = img.permute(1,0,2,3).reshape(3, -1).float().to(device)

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Vischeck</title>
+		<link rel="stylesheet" href="/assets/css/styles.css" />
+	</head>
+	<body>
+		<nav>
+			<a href="/index.html" class="current">Home</a>
+			<a href="/about.html">About</a>
+			<a href="/run.html">Run Sim</a>
+			<a href="/tinyeyes.html">TinyEyes</a>
+		</nav>
+
+		<main class="app">
+			<header class="app__header app__header--with-mark">
+				<div class="app__mark" aria-hidden="true">
+					<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M32 8L52 18.5V45.5L32 56L12 45.5V18.5L32 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+						<path d="M12 18.5L32 29L52 18.5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+						<path d="M32 29V56" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+						<path d="M22 24L32 29L42 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M22 40L32 45L42 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</div>
+				<div>
+					<h1 class="app__title">Welcome to Vischeck</h1>
+					<p class="app__subtitle">Simulate color vision deficiencies and explore Daltonize correction in your browser.</p>
+				</div>
+			</header>
+
+			<section class="grid">
+				<figure class="tile">
+					<figcaption class="tile__title">What is this?</figcaption>
+					<p style="margin:0; color: var(--muted);">
+						Vischeck simulates color vision deficiencies using the Brettel/Vienot/Mollon approach.
+						Daltonize is an optional correction that moves information into channels that remain perceptible.
+					</p>
+				</figure>
+
+				<figure class="tile">
+					<figcaption class="tile__title">Try it</figcaption>
+					<p style="margin:0 0 10px; color: var(--muted);">Upload an image, choose a deficiency type, optionally enable Daltonize, then download results.</p>
+					<a class="btn" href="/run.html" style="display:inline-block; text-decoration:none;">Open Simulator</a>
+				</figure>
+			</section>
+		</main>
+	</body>
+</html>

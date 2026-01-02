@@ -1,6 +1,6 @@
-from torchvision import transforms
 from TinyEyesTransform import TinyEyes as tinyeyes
 from PIL import Image
+from PIL import ImageOps
 import os
 
 
@@ -27,12 +27,7 @@ out_path = os.path.join(cwd, 'tinyeyes_images')
 if not os.path.exists(out_path):
     os.makedirs(out_path)
 
-# Define image crop and tinyeyes transform
-resize_and_tiny_transform = transforms.Compose([
-    transforms.Resize(crop_size),
-    transforms.CenterCrop(crop_size),
-    tinyeyes(age, width=w, dist=d),
-    ])
+te = tinyeyes(age, width=w, dist=d, imp='cpu')
 
 for image_file in images:
     image = os.path.join(image_dir, image_file)
@@ -41,7 +36,8 @@ for image_file in images:
     stim_img = Image.open(image)
     stim_img = stim_img.convert('RGB') if stim_img.mode != 'RGB' else stim_img
 
-    transformed_img = resize_and_tiny_transform(stim_img)
+    stim_img = ImageOps.fit(stim_img, (crop_size, crop_size), method=Image.Resampling.LANCZOS, centering=(0.5, 0.5))
+    transformed_img = te(stim_img)
 
     out_image_name = f'{image_name}_tinyeyes_{age}_{str(w).replace(".", "pt")}w_{str(d).replace(".", "pt")}d.png'
     transformed_img.save(os.path.join(out_path,f'{out_image_name}'))

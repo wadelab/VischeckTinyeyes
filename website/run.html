@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Run simulation</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/run.html" class="current">Run Sim</a>
+      <a href="/tinyeyes.html">TinyEyes</a>
+    </nav>
+
+    <main class="app" id="app">
+      <header class="app__header app__header--with-mark">
+        <div class="app__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8L52 18.5V45.5L32 56L12 45.5V18.5L32 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 18.5L32 29L52 18.5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M32 29V56" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 24L32 29L42 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 40L32 45L42 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app__title">Vischeck Simulator</h1>
+          <p class="app__subtitle">Client-side Vischeck simulation (Brettel/Vienot/Mollon) with optional Daltonize correction.</p>
+        </div>
+      </header>
+
+      <section class="app__layout">
+        <aside class="panel" aria-label="Controls">
+          <div class="panel__section">
+            <h2 class="panel__title">Image</h2>
+
+            <label class="field">
+              <span class="field__label">Upload</span>
+              <input type="file" id="fileInput" accept="image/*" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Sample</span>
+              <select id="sampleSelect">
+                <option value="">(none)</option>
+                <option value="assets/img/apples/orig.jpg">Apples</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Max size</span>
+              <select id="maxSize">
+                <option value="512">512px</option>
+                <option value="1024" selected>1024px</option>
+                <option value="2048">2048px</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Simulation</h2>
+            <label class="field">
+              <span class="field__label">Type</span>
+              <select id="simType">
+                <option value="normal">Normal</option>
+                <option value="protanope">Protanope</option>
+                <option value="deuteranope" selected>Deuteranope</option>
+                <option value="tritanope">Tritanope</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Daltonize</h2>
+            <label class="toggle">
+              <input type="checkbox" id="daltonizeEnabled" />
+              <span>Enable correction</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">LM stretch</span>
+              <input type="range" id="lmStretch" min="0" max="100" value="50" />
+              <span class="field__value" id="lmStretchVal">50</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Lum scale</span>
+              <input type="range" id="lumScale" min="0" max="100" value="50" />
+              <span class="field__value" id="lumScaleVal">50</span>
+            </label>
+
+            <label class="field">
+              <span class="field__label">S scale</span>
+              <input type="range" id="sScale" min="0" max="100" value="50" />
+              <span class="field__value" id="sScaleVal">50</span>
+            </label>
+          </div>
+
+          <div class="panel__section panel__section--actions">
+            <button class="btn" id="runBtn" type="button">Run</button>
+            <button class="btn btn--secondary" id="resetBtn" type="button">Reset</button>
+            <label class="field">
+              <span class="field__label">Download</span>
+              <select id="downloadWhich">
+                <option value="original">Original</option>
+                <option value="sim">Simulated</option>
+                <option value="dalt">Daltonized</option>
+                <option value="daltSim" selected>Daltonized + Simulated</option>
+              </select>
+            </label>
+            <button class="btn" id="downloadBtn" type="button">Download PNG</button>
+            <p class="status" id="status"></p>
+          </div>
+        </aside>
+
+        <section class="viewer" aria-label="Previews">
+          <div class="grid">
+            <figure class="tile">
+              <figcaption class="tile__title">Original</figcaption>
+              <canvas id="canvasOriginal"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">Simulated</figcaption>
+              <canvas id="canvasSim"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">Daltonized</figcaption>
+              <canvas id="canvasDalt"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">Daltonized + Simulated</figcaption>
+              <canvas id="canvasDaltSim"></canvas>
+            </figure>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/assets/js/app.js"></script>
+  </body>
+</html>

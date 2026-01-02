@@ -10,7 +10,7 @@ MYCODEDIR := .
 
 # Directories to search for header files
 
-SEARCHDIRS := -iquote -I${MYCODEDIR} -I${MYCODEDIR}/jama/ /usr/local/include
+SEARCHDIRS := -iquote -I${MYCODEDIR} -I${MYCODEDIR}/jama/ -I/usr/local/include -I/usr/include
 
 # makemake variables
 
@@ -21,7 +21,7 @@ SEARCHDIRS := -iquote -I${MYCODEDIR} -I${MYCODEDIR}/jama/ /usr/local/include
 # Optimizations for Via Nemiah (c3-2)
 #DEPENDFLAGS := -Wall ${SEARCHDIRS} -march=c3-2 -msse -mmmx -mfpmath=sse -O3 -pipe -fomit-frame-pointer 
 #DEPENDFLAGS := -Wall ${SEARCHDIRS} -O3 -march=athlon-xp -msse -mmmx -mfpmath=sse -pipe -fomit-frame-pointer
-DEPENDFLAGS := -Wall ${SEARCHDIRS} -O3 -ffast-math -march=athlon64 -mfpmath=sse,387 
+DEPENDFLAGS := -Wall ${SEARCHDIRS} -O3 -ffast-math
 
 # C preprocessor (C, C++, FORTRAN)
 CPPFLAGS = 
@@ -56,7 +56,7 @@ LDFLAGS    =
 #LOADLIBES := -L /usr/lib -lstdc++ -L ${MYCODEDIR} -lfftw3f
 # To statically link the FFT libs:
 #LOADLIBES := -static-libgcc ./libstdc++.a -lm -L ${MYCODEDIR} /usr/lib/libfftw3f.a
-LOADLIBES := -L /usr/lib -lstdc++ -lm -L ${MYCODEDIR} /usr/lib/libfftw3f.a 
+LOADLIBES := -L/usr/lib -L/usr/local/lib -lstdc++ -lm -lfftw3f
 
 # This is what makemake added
 

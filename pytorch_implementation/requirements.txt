@@ -1,0 +1,8 @@
+# Minimal deps to run TinyEyes on PIL images (CPU path)
+numpy
+pillow
+scipy
+
+# Optional (only needed for tensor/GPU paths)
+# torch
+# torchvision

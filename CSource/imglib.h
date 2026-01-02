@@ -14,7 +14,7 @@
  *		Proposed: Change red,green,blue etc to plane1,plane2,plane3.
  */		
 
-#include "/opt/homebrew/include/fftw3.h"
+#include <fftw3.h>
 
 #define FOURIER_SPACE 1
 #define REAL_SPACE 0

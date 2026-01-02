@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/about.html" class="current">About</a>
+      <a href="/run.html">Run Sim</a>
+      <a href="/tinyeyes.html">TinyEyes</a>
+    </nav>
+
+    <main class="app">
+      <header class="app__header app__header--with-mark">
+        <div class="app__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8L52 18.5V45.5L32 56L12 45.5V18.5L32 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 18.5L32 29L52 18.5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M32 29V56" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 24L32 29L42 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 40L32 45L42 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app__title">About</h1>
+          <p class="app__subtitle">Background on Vischeck, and this repo’s browser-based rebuild.</p>
+        </div>
+      </header>
+
+      <section class="tile">
+        <p style="margin:0; color: var(--muted);">
+          Vischeck is a webpage for simulating and correcting color vision deficiencies. It was originally launched in
+          <a href="https://web.archive.org/web/20000817130422/http://www.vischeck.com/">2000</a>
+          by Robert Dougherty and Alex Wade.
+          In those days we were both post-docs in a neuroscience lab at
+          <a href="https://web.stanford.edu/group/vista/cgi-bin/wandell/">Stanford</a>.
+          <a href="https://mindstronghealth.com/team/robert-bob-dougherty-phd/">Bob</a>
+          now works for Mindstrong and
+          <a href="https://www.york.ac.uk/psychology/staff/academicstaff/alex-wade/">Alex</a>
+          is at the University of York.
+        </p>
+        <p style="margin:12px 0 0; color: var(--muted);">
+          This is a rebuild of the original site. We’ve switched to a client-side JavaScript implementation.
+        </p>
+        <p style="margin:12px 0 0; color: var(--muted);">
+          In the meantime, code from the original Vischeck simulation is now in
+          <a href="https://github.com/Distrotech/gimp/blob/master/modules/display-filter-color-blind.c">GIMP</a>.
+          There are also other great simulators like
+          <a href="https://www.color-blindness.com/coblis-color-blindness-simulator/">Coblis</a>
+          and
+          <a href="https://www.toptal.com/designers/colorfilter/">Toptal’s Colorfilter</a>.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
