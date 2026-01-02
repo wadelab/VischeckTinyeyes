@@ -151,7 +151,7 @@ website/
 
 ### Using the Color Blindness Simulator
 
-1. **Navigate** to the Colorblindness page (`run.html`)
+1. **Navigate** to the Color Blindness page (`run.html`)
 2. **Upload an image** using the file input, or select a sample image
 3. **Choose the simulation type** (Protanope, Deuteranope, or Tritanope)
 4. **Click "Run"** to process the image
@@ -272,7 +272,7 @@ If you use Vischeck in your research, please cite:
 
 - **Issues/Bug Reports**: [GitHub Issues](https://github.com/wadelab/VischeckTinyeyes/issues)
 - **Email**: wade@wadelab.net
-- **Twitter**: @vischeck
+- **X (Twitter)**: @vischeck
 
 ## Conclusion
 
