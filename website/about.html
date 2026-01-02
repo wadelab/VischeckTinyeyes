@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>About</title>
-    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
     <nav>
-      <a href="/index.html">Home</a>
-      <a href="/about.html" class="current">About</a>
-	  <a href="/run.html">Colorblindness</a>
-      <a href="/tinyeyes.html">TinyEyes</a>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="current">About</a>
+	  <a href="run.html">Colorblindness</a>
+      <a href="tinyeyes.html">TinyEyes</a>
     </nav>
 
     <main class="app">
@@ -47,7 +47,10 @@
           This is a rebuild of the original site. We’ve switched to a client-side JavaScript implementation.
         </p>
         <p style="margin:12px 0 0; color: var(--muted);">
-          The TinyEyes work also includes Dr Heidi Baseler (University of York).
+          The TinyEyes team also includes Heidi Baseler <a href="https://www.york.ac.uk/psychology/staff/academicstaff/hb554/">(University of York)</a>.
+        </p>
+        <p style="margin:12px 0 0; color: var(--muted);">
+          <a href="https://www.linkedin.com/in/aine-travers-dineen/">Áine Dineen</a> at Trinity College Dublin generously provided the Pytorch implementation <a href="https://www.york.ac.uk/psychology/staff/academicstaff/hb554/">(University of York)</a>.
         </p>
 
 			<h2 class="panel__title" style="margin-top:16px;">Algorithms</h2>
@@ -60,6 +63,10 @@
         The Daltonize option applies an opponent-space correction that increases L–M contrast and projects it into the
 				L+M and S channels to preserve information that would otherwise be lost.
 			</p>
+      <p style="margin:12px 0 0; color: var(--muted);">
+        Daltonize was built in May 2002; the earliest archived snapshot we’ve found is
+        <a href="https://web.archive.org/web/20020607224213/http://vischeck.com:80/daltonize/">June 2002 on the Wayback Machine</a>.
+      </p>
 			<p style="margin:12px 0 0; color: var(--muted);">
         The TinyEyes simulator applies age-dependent Gaussian blur in opponent space (L+M, L–M, S), derived from developmental
 				vision estimates.
