@@ -73,11 +73,8 @@ export function daltonizeRgbLin(rgbLin, width, height, params) {
   const n = width * height;
 
   const lmStretch01 = (params.lmStretch ?? 50) / 100;
-  // In the original CLI, lumScale/sScale are effectively treated as ~0..100-ish
-  // “strength” knobs (defaults are 50). Keeping that convention here yields
-  // a usable dynamic range with the variance scaling below.
-  const lumScale = (params.lumScale ?? 50);
-  const sScale = (params.sScale ?? 50);
+  const lumScale01 = (params.lumScale ?? 50) / 100;
+  const sScale01 = (params.sScale ?? 50) / 100;
 
   // Compute means and variances in opponent space.
   let sum0 = 0, sum1 = 0, sum2 = 0;
@@ -100,20 +97,35 @@ export function daltonizeRgbLin(rgbLin, width, height, params) {
   const mean2 = sum2 / n;
 
   const var0 = Math.max(0, (sumSq0 / n) - mean0 * mean0);
+  const var1 = Math.max(0, (sumSq1 / n) - mean1 * mean1);
   const var2 = Math.max(0, (sumSq2 / n) - mean2 * mean2);
 
-  // Match original Vischeck C++ scaling behaviour.
-  // The C++ code computes variances in a 0..255-ish intensity domain, while this
-  // web pipeline runs in linear RGB 0..1. Variances therefore differ by ~255^2.
-  // Compensate in the denominator so the correction isn't wildly overpowered.
-  const VAR_SCALE = 255 * 255;
-  // Small additional gain so the default web effect is more visible.
-  // (Keeps the same slider semantics; just nudges overall correction strength.)
-  const GAIN = 1.35;
+  // Normalization:
+  // The original Vischeck Daltonize uses opponent-space statistics to determine
+  // how much LM contrast to project into luminance (L+M) and S.
+  // A naive inverse-variance scaling can be extremely image-dependent: images
+  // with low luminance variance (e.g. some FlCells stimuli) can become overly
+  // sensitive, while high-variance images can look unchanged.
+  //
+  // Here we scale by standard deviation ratios so the injected component is
+  // proportional to existing channel contrast, making results more consistent
+  // across images.
+  const EPS = 1e-6;
+  const sigma0 = Math.sqrt(var0 + EPS);
+  const sigma1 = Math.sqrt(var1 + EPS);
+  const sigma2 = Math.sqrt(var2 + EPS);
+
+  // Small additional gain so the default web effect is visible.
+  const GAIN = 1.15;
   const lmStretchScaled = lmStretch01 * 2.0 + 1.0;
   const lmScale = (lmStretchScaled - 1) / 4 + 1;
-  const amountToLM = GAIN * (-lumScale * 50 / (var0 * VAR_SCALE + 1));
-  const amountToS = GAIN * (-sScale * 20 / (var2 * VAR_SCALE + 1));
+
+  // Project LM contrast (o1) into L+M (o0) and S (o2).
+  // Coefficients are in opponent units; clamp to avoid pathological extremes.
+  const LUM_PROJECT = 0.9;
+  const S_PROJECT = 0.6;
+  const amountToLM = clampAbs(GAIN * -lumScale01 * LUM_PROJECT * (sigma0 / sigma1), 2.5);
+  const amountToS = clampAbs(GAIN * -sScale01 * S_PROJECT * (sigma2 / sigma1), 2.5);
 
   const out = new Float32Array(rgbLin.length);
 
@@ -142,4 +154,10 @@ export function daltonizeRgbLin(rgbLin, width, height, params) {
   }
 
   return out;
+}
+
+function clampAbs(x, maxAbs) {
+  if (x > maxAbs) return maxAbs;
+  if (x < -maxAbs) return -maxAbs;
+  return x;
 }
