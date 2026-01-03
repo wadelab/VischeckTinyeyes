@@ -76,11 +76,42 @@ nav a:hover {
   inset: -24px;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 9px 9px, var(--cone-r) 0 2.6px, transparent 2.8px),
-    radial-gradient(circle at 23px 15px, var(--cone-g) 0 2.6px, transparent 2.8px),
-    radial-gradient(circle at 15px 25px, var(--cone-b) 0 2.6px, transparent 2.8px);
-  background-size: 32px 32px;
-  opacity: 0.45;
+    /* 1:2:0.1 cone mosaic (R:G:B) by dot count: 10 red, 20 green, 1 blue per tile */
+    radial-gradient(circle at 10px 12px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 34px 18px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 58px 10px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 82px 22px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 106px 14px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 18px 46px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 46px 54px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 70px 42px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 94px 58px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 114px 44px, var(--cone-r) 0 2.6px, transparent 2.8px),
+
+    radial-gradient(circle at 22px 10px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 46px 26px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 70px 14px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 94px 30px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 118px 22px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 10px 34px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 34px 40px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 58px 34px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 82px 46px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 106px 36px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 26px 62px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 50px 70px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 74px 60px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 98px 74px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 122px 62px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 14px 86px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 38px 92px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 62px 84px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 86px 96px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 110px 88px, var(--cone-g) 0 2.6px, transparent 2.8px),
+
+    radial-gradient(circle at 76px 78px, var(--cone-b) 0 2.6px, transparent 2.8px);
+  background-size: 128px 128px;
+  opacity: 0.30;
   mix-blend-mode: multiply;
 }
 
