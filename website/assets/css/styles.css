@@ -76,12 +76,12 @@ nav a:hover {
   inset: -24px;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 9px 9px, var(--cone-r) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 23px 15px, var(--cone-g) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 15px 25px, var(--cone-b) 0 2px, transparent 2.2px);
+    radial-gradient(circle at 9px 9px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 23px 15px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 15px 25px, var(--cone-b) 0 2.6px, transparent 2.8px);
   background-size: 32px 32px;
-  opacity: 0.22;
-  mask-image: radial-gradient(circle at 0% 35%, rgba(0,0,0,0.9), transparent 70%);
+  opacity: 0.45;
+  mix-blend-mode: multiply;
 }
 
 .app__header--with-mark > * {
