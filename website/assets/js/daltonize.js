@@ -76,6 +76,11 @@ export function daltonizeRgbLin(rgbLin, width, height, params) {
   const lumScale01 = (params.lumScale ?? 50) / 100;
   const sScale01 = (params.sScale ?? 50) / 100;
 
+  // Make the top end of the sliders stronger without over-amplifying low values.
+  // x in [0,1] -> x*(0.6 + 1.0*x) in [0,1.6]
+  const lumScaleEff = lumScale01 * (0.6 + 1.0 * lumScale01);
+  const sScaleEff = sScale01 * (0.6 + 1.0 * sScale01);
+
   // Compute means and variances in opponent space.
   let sum0 = 0, sum1 = 0, sum2 = 0;
   let sumSq0 = 0, sumSq1 = 0, sumSq2 = 0;
@@ -124,8 +129,8 @@ export function daltonizeRgbLin(rgbLin, width, height, params) {
   // Coefficients are in opponent units; clamp to avoid pathological extremes.
   const LUM_PROJECT = 0.9;
   const S_PROJECT = 0.6;
-  const amountToLM = clampAbs(GAIN * -lumScale01 * LUM_PROJECT * (sigma0 / sigma1), 2.5);
-  const amountToS = clampAbs(GAIN * -sScale01 * S_PROJECT * (sigma2 / sigma1), 2.5);
+  const amountToLM = clampAbs(GAIN * -lumScaleEff * LUM_PROJECT * (sigma0 / sigma1), 3.5);
+  const amountToS = clampAbs(GAIN * -sScaleEff * S_PROJECT * (sigma2 / sigma1), 3.5);
 
   const out = new Float32Array(rgbLin.length);
 
