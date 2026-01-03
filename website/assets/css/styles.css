@@ -5,6 +5,9 @@
   --border: #e5e5e5;
   --panel: #ffffff;
   --accent: #111111;
+  --cone-r: rgba(220, 38, 38, 0.22);
+  --cone-g: rgba(22, 163, 74, 0.20);
+  --cone-b: rgba(37, 99, 235, 0.20);
   --radius: 12px;
   --radius-sm: 10px;
   --shadow: 0 1px 2px rgba(0,0,0,0.06), 0 10px 24px rgba(0,0,0,0.08);
@@ -63,6 +66,27 @@ nav a:hover {
   grid-template-columns: 48px 1fr;
   gap: 12px;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.app__header--with-mark::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 9px 9px, var(--cone-r) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 23px 15px, var(--cone-g) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 15px 25px, var(--cone-b) 0 2px, transparent 2.2px);
+  background-size: 32px 32px;
+  opacity: 0.22;
+  mask-image: radial-gradient(circle at 0% 35%, rgba(0,0,0,0.9), transparent 70%);
+}
+
+.app__header--with-mark > * {
+  position: relative;
+  z-index: 1;
 }
 
 .app__mark {
