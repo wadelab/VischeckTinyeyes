@@ -138,6 +138,54 @@ nav a:hover {
   letter-spacing: -0.02em;
 }
 
+.brand {
+  display: inline-block;
+}
+
+.brand::after {
+  content: "";
+  display: block;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  outline: 1px solid var(--border);
+  outline-offset: 0;
+  /* Three discrete bars (R/G/B) with small separators */
+  background-image:
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    );
+}
+
 .app__subtitle {
   margin: 6px 0 0;
   color: var(--muted);
