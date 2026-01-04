@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Vischeck</title>
+  <defs>
+    <clipPath id="cube">
+      <path d="M32 8L52 18.5V45.5L32 56L12 45.5V18.5L32 8Z"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cube)">
+    <!-- Faces -->
+    <polygon points="32,8 52,18.5 32,29 12,18.5" fill="#ff0000"/>
+    <polygon points="12,18.5 32,29 32,56 12,45.5" fill="#00cc00"/>
+    <polygon points="52,18.5 32,29 32,56 52,45.5" fill="#0066ff"/>
+  </g>
+
+  <!-- Outline / edges -->
+  <path d="M32 8L52 18.5V45.5L32 56L12 45.5V18.5L32 8Z" fill="none" stroke="#111" stroke-opacity="0.85" stroke-width="1.75" stroke-linejoin="round"/>
+  <path d="M12 18.5L32 29L52 18.5" fill="none" stroke="#111" stroke-opacity="0.85" stroke-width="1.75" stroke-linejoin="round"/>
+  <path d="M32 29V56" fill="none" stroke="#111" stroke-opacity="0.85" stroke-width="1.75" stroke-linejoin="round"/>
+</svg>
