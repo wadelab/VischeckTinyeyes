@@ -40,3 +40,7 @@ Create/activate a venv and install deps using `pip` (or `uv pip` if you prefer):
 Then run:
 
 `cd pytorch_implementation && python run_TinyEyes_with_Pytorch.py`
+
+## License
+
+GPL-3.0 (see `LICENSE`).
