@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TinyEyes simulation</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="run.html">Colorblindness</a>
+      <a href="tinyeyes.html" class="current">TinyEyes</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <main class="app" id="app">
+      <header class="app__header app__header--with-mark">
+        <div class="app__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8L52 18.5V45.5L32 56L12 45.5V18.5L32 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 18.5L32 29L52 18.5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M32 29V56" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 24L32 29L42 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 40L32 45L42 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app__title">TinyEyes Simulator</h1>
+          <p class="app__subtitle">Opponent-space blur model for infant visual development (age-dependent channel blur).</p>
+        </div>
+      </header>
+
+      <section class="app__layout">
+        <aside class="panel" aria-label="Controls">
+          <div class="panel__section">
+            <h2 class="panel__title">Image</h2>
+
+            <label class="field">
+              <span class="field__label">Upload</span>
+              <input type="file" id="fileInput" accept="image/*" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Sample</span>
+              <select id="sampleSelect">
+                <option value="">(none)</option>
+                <option value="assets/img/apples/orig.jpg">Apples</option>
+                <option value="assets/img/aboutDaltonize/FlCells_Small.jpg">FlCells</option>
+                <option value="assets/img/aboutDaltonize/Gaugin_original_small.jpg">Gauguin</option>
+                <option value="assets/img/aboutDaltonize/ishihara_45.jpg">Ishihara</option>
+                <option value="assets/img/aboutDaltonize/fruit.png">Fruit</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Max size (square)</span>
+              <select id="maxSize">
+                <option value="256">256px</option>
+                <option value="512">512px</option>
+                <option value="1024" selected>1024px</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Model</h2>
+
+            <label class="field">
+              <span class="field__label">Age</span>
+              <select id="age"></select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Display width (cm)</span>
+              <input type="number" id="displayWidthCm" value="30" min="1" step="1" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Viewing distance (cm)</span>
+              <input type="number" id="viewDistCm" value="60" min="1" step="1" />
+            </label>
+          </div>
+
+          <div class="panel__section panel__section--actions">
+            <button class="btn" id="runBtn" type="button">Run</button>
+            <button class="btn btn--secondary" id="resetBtn" type="button">Reset</button>
+            <button class="btn" id="downloadBtn" type="button">Download PNG</button>
+            <p class="status" id="status"></p>
+          </div>
+        </aside>
+
+        <section class="viewer" aria-label="Previews">
+          <div class="grid">
+            <figure class="tile">
+              <figcaption class="tile__title">Original (center-cropped)</figcaption>
+              <canvas id="canvasOriginal"></canvas>
+            </figure>
+
+            <figure class="tile">
+              <figcaption class="tile__title">TinyEyes</figcaption>
+              <canvas id="canvasTinyEyes"></canvas>
+            </figure>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="assets/js/tinyeyes_app.js"></script>
+  </body>
+</html>

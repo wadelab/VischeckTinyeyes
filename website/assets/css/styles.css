@@ -1,0 +1,365 @@
+:root {
+  --bg: #fafafa;
+  --fg: #111111;
+  --muted: #666666;
+  --border: #e5e5e5;
+  --panel: #ffffff;
+  --accent: #111111;
+  --cone-r: rgba(220, 38, 38, 0.22);
+  --cone-g: rgba(22, 163, 74, 0.20);
+  --cone-b: rgba(37, 99, 235, 0.20);
+  --radius: 12px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.06), 0 10px 24px rgba(0,0,0,0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.current {
+  color: var(--fg);
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.4;
+}
+
+nav {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+}
+
+nav a {
+  color: var(--fg);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 999px;
+}
+
+nav a:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.app__header {
+  margin: 12px 0 16px;
+}
+
+.app__header--with-mark {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.app__header--with-mark::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  pointer-events: none;
+  background-image:
+    /* 1:2:0.1 cone mosaic (R:G:B) by dot count: 10 red, 20 green, 1 blue per tile */
+    radial-gradient(circle at 10px 12px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 34px 18px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 58px 10px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 82px 22px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 106px 14px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 18px 46px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 46px 54px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 70px 42px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 94px 58px, var(--cone-r) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 114px 44px, var(--cone-r) 0 2.6px, transparent 2.8px),
+
+    radial-gradient(circle at 22px 10px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 46px 26px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 70px 14px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 94px 30px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 118px 22px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 10px 34px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 34px 40px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 58px 34px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 82px 46px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 106px 36px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 26px 62px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 50px 70px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 74px 60px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 98px 74px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 122px 62px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 14px 86px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 38px 92px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 62px 84px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 86px 96px, var(--cone-g) 0 2.6px, transparent 2.8px),
+    radial-gradient(circle at 110px 88px, var(--cone-g) 0 2.6px, transparent 2.8px),
+
+    radial-gradient(circle at 76px 78px, var(--cone-b) 0 2.6px, transparent 2.8px);
+  background-size: 128px 128px;
+  opacity: 0.30;
+  mix-blend-mode: multiply;
+}
+
+.app__header--with-mark > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app__mark {
+  width: 48px;
+  height: 48px;
+  color: var(--fg);
+}
+
+.app__mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.app__title {
+  font-size: 28px;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.brand {
+  display: inline-block;
+}
+
+.brand::after {
+  content: "";
+  display: block;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  outline: 1px solid var(--border);
+  outline-offset: 0;
+  /* Three discrete bars (R/G/B) with small separators */
+  background-image:
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    ),
+    linear-gradient(
+      90deg,
+      var(--cone-r) 0 32.5%,
+      transparent 32.5% 34%,
+      var(--cone-g) 34% 66.5%,
+      transparent 66.5% 68%,
+      var(--cone-b) 68% 100%
+    );
+}
+
+.app__subtitle {
+  margin: 6px 0 0;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.app__layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .app__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.panel__section {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+
+.panel__section:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.panel__section--actions {
+  display: grid;
+  gap: 10px;
+}
+
+.panel__title {
+  font-size: 14px;
+  margin: 0 0 8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.field__value {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+
+input[type="file"],
+select,
+input[type="range"] {
+  width: 100%;
+}
+
+select {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 10px 10px;
+  font-size: 14px;
+}
+
+input[type="file"] {
+  font-size: 14px;
+}
+
+input[type="range"] {
+  accent-color: var(--accent);
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+  filter: brightness(1.03);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--fg);
+}
+
+.btn--secondary:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.btn:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid rgba(17,17,17,0.35);
+  outline-offset: 2px;
+}
+
+.status {
+  margin: 0;
+  color: var(--muted);
+  min-height: 18px;
+  font-size: 12px;
+}
+
+.viewer {
+  min-width: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tile {
+  margin: 0;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 10px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.tile__title {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #f0f0f0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}

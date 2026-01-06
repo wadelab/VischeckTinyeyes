@@ -1,0 +1,11 @@
+2000-03-02 RFD: recompiled everything in single-precision mode.  This involved 
+creating single-precision verions of fftw (lib = lsrfftw & lsfftw), changing 
+every 'double' to 'float' in this source, and using 'srfftw.h' instead of 
+'rfftw.h'.  I also had to recreate displays/CRT.dat & displays/LCD.dat with 
+floats instead of doubles.
+
+2021-10-20 ARW: It has been a while. Generated an OSX/M1 compatible Makefile (MakefileMac) that generates operational code on a MacBook 13" M1. It is a testament to the awesomeness of Homebrew, JAMA (https://math.nist.gov/javanumerics/jama/) and FFTW and open source tools in general that this still required almost no effort after 30 years. Replaced the test image which had been lost along the way. You can run the binary using test.pl
+
+
+
+
