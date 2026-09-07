@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Animal Vision Simulator</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#111111" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <style>
+      .av-viewer canvas { width: 100%; height: auto; display: block; border-radius: var(--radius-sm); background: #000; }
+      .av-viewer video { display: none; }
+      .av-meta { color: var(--muted); font-size: 12px; margin: 6px 0 0; word-break: break-word; }
+      .av-info li { margin: 2px 0; }
+      .av-info ul { padding-left: 18px; margin: 6px 0; }
+      .av-caveat { border-left: 3px solid #d97706; padding: 8px 12px; background: #fffbeb; border-radius: 6px; margin: 8px 0; }
+      .btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+      @media (max-width: 700px) { .app__layout { display: block; } .panel { margin-top: 12px; } .av-first { order: -1; } }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="run.html">Colorblindness</a>
+      <a href="tinyeyes.html">TinyEyes</a>
+      <a href="animal.html" class="current">Animal vision</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+
+    <main class="app" id="app">
+      <header class="app__header">
+        <h1 class="app__title">Animal Vision Simulator <span style="font-size:0.6em;color:var(--muted)">prototype</span></h1>
+        <p class="app__subtitle">Live camera or photo, rendered as a dog, cat, fly or bee would see it: species photoreceptor spectra, acuity and compound-eye sampling, all computed in scene degrees.</p>
+      </header>
+
+      <section class="app__layout">
+        <aside class="panel" aria-label="Controls">
+          <div class="panel__section">
+            <h2 class="panel__title">Source</h2>
+            <div class="btnrow">
+              <button class="btn" id="camBtn" type="button">Start camera</button>
+              <button class="btn btn--secondary" id="flipBtn" type="button">Flip</button>
+              <button class="btn btn--secondary" id="stopBtn" type="button">Stop</button>
+            </div>
+            <label class="field"><span class="field__label">Photo</span><input type="file" id="fileInput" accept="image/*" /></label>
+            <div class="btnrow"><button class="btn btn--secondary" id="sampleBtn" type="button">Sample image</button>
+              <button class="btn btn--secondary" id="snapBtn" type="button">Save PNG</button></div>
+            <p class="status" id="status"></p>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Species</h2>
+            <label class="field"><span class="field__label">Animal</span><select id="species"></select></label>
+            <label class="field"><span class="field__label">Light level</span><input type="range" id="light" min="0" max="100" value="100" /><span class="field__value" id="lightVal">100</span></label>
+            <label class="field"><span class="field__label">Split (original | animal)</span><input type="range" id="split" min="0" max="100" value="50" /><span class="field__value" id="splitVal">50</span></label>
+            <label class="toggle" id="hexRow"><input type="checkbox" id="hex" checked /><span>Ommatidial mosaic (one value per facet)</span></label>
+            <label class="toggle" id="edgesRow"><input type="checkbox" id="edges" checked /><span>Draw facet edges (cosmetic)</span></label>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Geometry</h2>
+            <label class="field"><span class="field__label">Camera field of view (°)</span><input type="range" id="fov" min="20" max="120" value="60" /><span class="field__value" id="fovVal">60</span></label>
+            <label class="toggle"><input type="checkbox" id="trueScale" /><span>True scale: crop so the screen subtends the same angle as the scene</span></label>
+            <label class="field"><span class="field__label">Displayed width (cm)</span><input type="number" id="screenCm" min="2" max="200" step="0.5" /></label>
+            <label class="field"><span class="field__label">Viewing distance (cm)</span><input type="number" id="distCm" min="5" max="500" step="1" /></label>
+            <label class="field"><span class="field__label">Exaggerate blur × (not physical)</span><input type="range" id="blurGain" min="1" max="10" value="1" /><span class="field__value" id="blurGainVal">1</span></label>
+          </div>
+        </aside>
+
+        <section class="viewer av-viewer av-first" aria-label="Preview">
+          <video id="video" playsinline muted></video>
+          <canvas id="canvasOut" width="16" height="9"></canvas>
+          <p class="av-meta"><span id="fpsInfo"></span> <span id="geomInfo"></span></p>
+          <p class="av-meta">Space bar toggles the split view. Left of the line is the original, right is the animal.</p>
+
+          <div class="tile av-info" style="margin-top:12px">
+            <figcaption class="tile__title" id="infoTitle"></figcaption>
+            <ul id="infoFacts"></ul>
+            <p id="infoNotes" style="color:var(--muted)"></p>
+            <div class="av-caveat">
+              <strong>What this can and cannot show.</strong> Colour is simulated the Vischeck way: each pixel is treated as a colour on a measured display, the animal's receptor catches are computed from published spectral peaks, and the result is re-rendered so that the animal could not tell the simulation from the original. Ultraviolet channels (flies, bees, birds) cannot be recovered from an RGB camera and are left out. Acuity blur is applied in <em>scene</em> degrees, so on a phone it is nearly invisible unless you enable true scale, which is the physically correct behaviour. Nothing here says what the animal <em>experiences</em>.
+            </div>
+            <details><summary>References</summary><ul id="infoRefs"></ul></details>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="assets/js/animal_app.js"></script>
+  </body>
+</html>

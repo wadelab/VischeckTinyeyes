@@ -1,0 +1,9 @@
+{
+  "name": "Vischeck Animal Vision",
+  "short_name": "AnimalVision",
+  "start_url": "animal.html",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#111111",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

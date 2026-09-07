@@ -5,6 +5,7 @@ This repo contains:
 - **Vischeck**: color vision deficiency simulation (Brettel/Vienot/Mollon)
 - **Daltonize**: compensates L-M opponent loss by remapping into other opponent channels
 - **TinyEyes**: infant vision simulation over a range of ages
+- **Animal Vision** (prototype): live-camera simulation of dog, cat, fly and bee vision (`website/animal.html`, model in `model/`, plan in `docs/ANIMAL_VISION_PLAN.md`)
 
 ## Ubuntu quickstart (Vischeck + Daltonize)
 
